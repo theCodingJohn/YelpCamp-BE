@@ -1,32 +1,22 @@
 import express from "express";
-import Campground from "../models/campground.model.js";
+import {
+  addACampground,
+  deleteACampground,
+  editACampground,
+  getACampground,
+  getAllCampgrounds,
+} from "../controllers/campgrounds.controller.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const campgrounds = await Campground.find({});
-  res.send(campgrounds);
-});
+router.get("/", getAllCampgrounds);
 
-router.post("/", async (req, res) => {
-  const campground = new Campround(req.body);
-  await campground.save();
-});
+router.post("/", addACampground);
 
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const camp = await Campground.findById(id);
-  res.send(camp);
-});
+router.get("/:id", getACampground);
 
-router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const camp = await Campground.findByIdAndUpdate(id, { ...req.body });
-});
+router.put("/:id", editACampground);
 
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  await Campground.findByIdAndDelete(id);
-});
+router.delete("/:id", deleteACampground);
 
 export default router;
